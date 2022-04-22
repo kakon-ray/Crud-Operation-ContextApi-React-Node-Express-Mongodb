@@ -10,14 +10,12 @@ export default function Read() {
   const { id } = useParams();
   console.log(id);
 
-  const user = users.filter((users) => users.id == id);
+  const user = users.filter((users) => users._id == id);
   console.log(user);
   return (
     <div className="redStyle">
       {user.map((users) => (
         <ul>
-          <hr></hr>
-          <h2>ID : {users.id}</h2>
           <hr></hr>
           <h2>Name : {users.name}</h2>
           <hr></hr>

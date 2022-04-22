@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "../Home/Home.css";
 import { Button, Table } from "react-bootstrap";
 import { userContext } from "../userContext/userContext";
@@ -28,23 +28,23 @@ export default function Home() {
           </thead>
           <tbody>
             {users.map((users) => (
-              <tr>
+              <tr key={users._id}>
                 <td>{users.id}</td>
                 <td>{users.name}</td>
                 <td>{users.position}</td>
                 <td>{users.salary}</td>
                 <td>
-                  <Link to={"/read/" + users.id}>
+                  <Link to={"/read/" + users._id}>
                     <Button className="btn_primary" variant="primary">
                       Red
                     </Button>
                   </Link>
-                  <Link to={"/edit/" + users.id}>
+                  <Link to={"/edit/" + users._id}>
                     <Button className="btn_primary" variant="success">
                       Edit
                     </Button>
                   </Link>
-                  <Link to={"/delete/" + users.id}>
+                  <Link to={"/delete/" + users._id}>
                     <Button className="btn_secondary" variant="danger">
                       Delete
                     </Button>

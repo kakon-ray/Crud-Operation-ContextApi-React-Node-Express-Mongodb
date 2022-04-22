@@ -12,8 +12,21 @@ export default function Delete() {
   console.log(users[id]);
 
   const deleteUser = (id) => {
-    const newUser = users.filter((users) => users.id != id);
-    setUsers([...newUser]);
+    const proceed = window.confirm("Are you deleted item");
+
+    if (proceed) {
+      const url = `http://localhost:5000/item/${id}`;
+      fetch(url, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.deletedCount > 0) {
+            const newServices = users.filter((service) => service._id != id);
+            setUsers(newServices);
+          }
+        });
+    }
   };
 
   return (

@@ -34,7 +34,6 @@ export default function Create() {
     setUsers([
       ...users,
       {
-        id: id,
         name: name,
         position: position,
         salary: salary,
@@ -42,7 +41,6 @@ export default function Create() {
     ]);
 
     const item = {
-      id: id,
       name: name,
       position: position,
       salary: salary,
@@ -66,16 +64,6 @@ export default function Create() {
   return (
     <div className="create">
       <Form onSubmit={addUser}>
-        <Form.Group>
-          <Form.Label>ID</Form.Label>
-          <Form.Control
-            type="text"
-            name="id"
-            value={id}
-            onChange={updateId}
-            placeholder="Enter ID"
-          />
-        </Form.Group>
         <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control

@@ -5,67 +5,53 @@ import { Button, Form } from "react-bootstrap";
 
 export default function Edit() {
   const [users, setUsers] = useContext(userContext);
+  const [updateUser, setUpdateUser] = useState({});
   const { id } = useParams();
-  const user = users.filter((users) => users.id == id);
-
-  const [userId, setId] = useState(user[0].id);
-  const [name, setName] = useState(user[0].name);
-  const [position, setPosition] = useState(user[0].position);
-  const [salary, setSalary] = useState(user[0].salary);
-  const [check, setCheck] = useState("");
 
   useEffect(() => {
-    const newId = id;
-    user[0].id = newId;
-  }, [id]);
+    const url = `http://localhost:5000/item/${id}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setUpdateUser(data));
+  }, []);
 
-  useEffect(() => {
-    const newName = name;
-    user[0].name = newName;
-  }, [name]);
+  const editUser = (event) => {
+    event.preventDefault();
 
-  useEffect(() => {
-    const newPosition = position;
-    user[0].position = newPosition;
-  }, [position]);
+    const name = event.target.name.value;
+    const position = event.target.position.value;
+    const salary = event.target.salary.value;
 
-  useEffect(() => {
-    const newSalary = salary;
-    user[0].salary = newSalary;
-  }, [salary]);
+    const updateUser = { name, position, salary };
 
-  const editUser = (e) => {
-    e.preventDefault();
     setUsers([...users]);
-  };
 
-  const testAccout = (e) => {
-    e.preventDefault();
-    setCheck("Submit SuccessFull");
+    // send to the server side update user
+    const url = `http://localhost:5000/item/${id}`;
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateUser),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("success", data);
+
+        alert("users added successfully!!!");
+      });
   };
 
   return (
     <div className="create">
-      <Form>
-        <Form.Group>
-          <Form.Label>ID</Form.Label>
-
-          <Form.Control
-            type="text"
-            name="id"
-            value={userId}
-            onChange={(e) => setId(e.target.value)}
-            placeholder={id}
-          />
-        </Form.Group>
+      <Form onSubmit={editUser}>
         <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
             name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={user[0].name}
+            defaultValue={updateUser.name}
           />
         </Form.Group>
         <Form.Group>
@@ -73,9 +59,7 @@ export default function Edit() {
           <Form.Control
             type="text"
             name="position"
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-            placeholder={user[0].position}
+            defaultValue={updateUser.position}
           />
         </Form.Group>
         <Form.Group>
@@ -83,25 +67,16 @@ export default function Edit() {
           <Form.Control
             type="text"
             name="salary"
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
-            placeholder={user[0].salary}
+            defaultValue={updateUser.salary}
           />
         </Form.Group>
-        <Button
-          className="action_btn m-3"
-          variant="primary"
-          type="submit"
-          onClick={testAccout}
-          onSubmit={() => editUser}
-        >
+        <Button className="action_btn m-3" variant="primary" type="submit">
           Edit Now
         </Button>
         <Link to="/">
           <Button className="action_btn" variant="info">
             Back to Home
           </Button>
-          <p>{editUser ? check : "Submit Unsuccessfull"}</p>
         </Link>
       </Form>
     </div>
