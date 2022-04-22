@@ -1,0 +1,11 @@
+.read {
+  padding-top: 20px;
+}
+
+.redStyle {
+  background-color: rgb(196, 120, 21);
+  padding: 20px;
+  color: aliceblue;
+  width: 50%;
+  margin: auto auto;
+}
