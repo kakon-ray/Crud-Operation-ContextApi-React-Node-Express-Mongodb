@@ -9,7 +9,7 @@ export const UserProvider = (props) => {
     fetch("http://localhost:5000/item")
       .then((res) => res.json())
       .then((data) => setUsers(data));
-  }, [users]);
+  }, []);
 
   return (
     <userContext.Provider value={[users, setUsers]}>

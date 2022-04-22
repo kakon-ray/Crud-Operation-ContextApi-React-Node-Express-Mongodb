@@ -24,8 +24,6 @@ export default function Edit() {
 
     const updateUser = { name, position, salary };
 
-    setUsers([...users]);
-
     // send to the server side update user
     const url = `http://localhost:5000/item/${id}`;
     fetch(url, {
