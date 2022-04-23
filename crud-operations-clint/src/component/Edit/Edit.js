@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useContext, useState, useEffect } from "react";
 import { userContext } from "../userContext/userContext";
 import { Link, useParams } from "react-router-dom";
@@ -23,6 +24,16 @@ export default function Edit() {
     const salary = event.target.salary.value;
 
     const updateUser = { name, position, salary };
+
+    // start this code is clint side first update ======================
+    const editUser = [...users];
+    for (let item of editUser) {
+      if (item._id == id) {
+        (item.name = name), (item.position = position), (item.salary = salary);
+      }
+      setUsers(editUser);
+    }
+    // end code is clint side first update ==============================
 
     // send to the server side update user
     const url = `http://localhost:5000/item/${id}`;
